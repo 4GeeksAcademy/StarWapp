@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { FavoriteContext } from "../hooks/FavoriteContext"
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 export const Characters = () => {
 
@@ -24,12 +25,18 @@ export const Characters = () => {
 		getCharacters()
 	  }, [])
 
+	  const getIdFromUrl = (url) => {
+		const segments = url.split('/').filter(Boolean);
+		return segments[segments.length - 1];
+	  };
+
 	  return (
 		<div className="container">
 		  <div className="row text-center">
 			<h1 className="text-white">Personajes</h1>
 			{characters.map((character) => {
           	const isFavorite = favorite.some((fav) => fav.name === character.name);
+			const id = getIdFromUrl(character.url);
 
 		  return (
             <div className="col-6 mb-4" key={character.name}>
@@ -48,7 +55,9 @@ export const Characters = () => {
                       <div className="dropdown-menu p-3 bg-dark text-light text-start">
                         <h2 className="text-warning">{character.name}</h2>
                         <h4><strong>Información</strong></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p><strong>Año de nacimiento:</strong> {character.birth_year}</p>
+      					<p><strong>Género:</strong> {character.gender}</p>
+						<p><strong>Mundo de origen:</strong> {character.homeworld}</p>
                       </div>
                     </div>
                   </div>
@@ -60,14 +69,21 @@ export const Characters = () => {
                         <strong>Peso:</strong> {character.mass}<br />
                         <strong>Año de nacimiento:</strong> {character.birth_year}
                       </p>
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={() => addToFavorites(character)}
-                        disabled={isFavorite}   // se desactiva al añadir a fav
-                      >
-                        <i className="fas fa-heart mx-1"></i>
-                        {isFavorite ? "Guardado" : "Guardar en favoritos"}
-                      </button>
+                      <div>
+                            <Link to={`/people/${id}`}>
+                                <button className="btn btn-outline-warning p-2 px-4 m-2">
+                                    Leer más
+                                </button>
+                            </Link>
+                            <button
+                                className="btn btn-outline-danger"
+                                onClick={() => addToFavorites(character)}
+                                disabled={isFavorite}   // se desactiva al añadir a fav
+                            >
+                                <i className="fas fa-heart mx-1"></i>
+                                {isFavorite ? "Guardado" : "Guardar en favoritos"}
+                            </button>
+                        </div>
                     </div>
                   </div>
                 </div>

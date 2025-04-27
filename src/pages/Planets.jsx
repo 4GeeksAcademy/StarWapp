@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { FavoriteContext } from "../hooks/FavoriteContext"
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 export const Planets = () => {
 
@@ -24,13 +25,18 @@ export const Planets = () => {
       getPlanets()
     }, [])
 
+    const getIdFromUrl = (url) => {
+		const segments = url.split('/').filter(Boolean);
+		return segments[segments.length - 1];
+	  };
+
     return (
 		<div className="container">
 		  <div className="row text-center">
 			<h1 className="text-white">Planetas</h1>
 			{planets.map((planet) => {
-          	const isFavorite = favorite.some((fav) => fav.name === planet.name);
-
+          	    const isFavorite = favorite.some((fav) => fav.name === planet.name);
+                const id = getIdFromUrl(planet.url);
 		  return (
             <div className="col-6 mb-4" key={planet.name}>
               <div className="card mx-auto shadow-lg">
@@ -48,7 +54,9 @@ export const Planets = () => {
                       <div className="dropdown-menu p-3 bg-dark text-light text-start">
                         <h2 className="text-warning">{planet.name}</h2>
                         <h4><strong>Información</strong></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p><strong>Diámetro:</strong> {planet.diameter}</p>
+                        <p><strong>Aguas superficiales:</strong> {planet.surface_water}</p>
+                        <p><strong>Periodo orbital:</strong> {planet.orbital_period}</p>
                       </div>
                     </div>
                   </div>
@@ -60,14 +68,21 @@ export const Planets = () => {
                         <strong>Terreno:</strong> {planet.terrain}<br />
                         <strong>Población:</strong> {planet.population}
                       </p>
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={() => addToFavorites(planet)}
-                        disabled={isFavorite}   // se desactiva al añadir a fav
-                      >
-                        <i className="fas fa-heart mx-1"></i>
-                        {isFavorite ? "Guardado" : "Guardar en favoritos"}
-                      </button>
+                      <div>
+                            <Link to={`/planet/${id}`}>
+                                <button className="btn btn-outline-warning p-2 px-4 m-2">
+                                    Leer más
+                                </button>
+                            </Link>
+                            <button
+                                className="btn btn-outline-danger"
+                                onClick={() => addToFavorites(planet)}
+                                disabled={isFavorite}   // se desactiva al añadir a fav
+                            >
+                                <i className="fas fa-heart mx-1"></i>
+                                {isFavorite ? "Guardado" : "Guardar en favoritos"}
+                            </button>
+                        </div>
                     </div>
                   </div>
                 </div>

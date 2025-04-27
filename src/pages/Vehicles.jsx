@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { FavoriteContext } from "../hooks/FavoriteContext"
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 export const Vehicles = () => {
 
@@ -24,13 +25,18 @@ export const Vehicles = () => {
       getVehicles()
     }, [])
 
+    const getIdFromUrl = (url) => {
+		const segments = url.split('/').filter(Boolean);
+		return segments[segments.length - 1];
+	  };
+
     return (
 		<div className="container">
 		  <div className="row text-center">
 			<h1 className="text-white">Vehículos</h1>
 			{vehicles.map((vehicle) => {
-          	const isFavorite = favorite.some((fav) => fav.name === vehicle.name);
-
+          	    const isFavorite = favorite.some((fav) => fav.name === vehicle.name);
+                const id = getIdFromUrl(vehicle.url);
 		  return (
             <div className="col-6 mb-4" key={vehicle.name}>
               <div className="card mx-auto shadow-lg">
@@ -48,7 +54,9 @@ export const Vehicles = () => {
                       <div className="dropdown-menu p-3 bg-dark text-light text-start">
                         <h2 className="text-warning">{vehicle.name}</h2>
                         <h4><strong>Información</strong></h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <p><strong>Personal necesario para conducirlo:</strong> {vehicle.crew}</p>
+                        <p><strong>Pasajeros:</strong> {vehicle.passengers}</p>
+                        <p><strong>Capacidad de carga:</strong> {vehicle.cargo_capacity}</p>
                       </div>
                     </div>
                   </div>
@@ -60,14 +68,22 @@ export const Vehicles = () => {
                         <strong>Fabricante:</strong> {vehicle.manufacturer}<br />
                         <strong>Costo:</strong> {vehicle.cost_in_credits}
                       </p>
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={() => addToFavorites(vehicle)}
-                        disabled={isFavorite}   // se desactiva al añadir a fav
-                      >
-                        <i className="fas fa-heart mx-1"></i>
-                        {isFavorite ? "Guardado" : "Guardar en favoritos"}
-                      </button>
+                        <div>
+                            <Link to={`/vehicle/${id}`}>
+                                <button className="btn btn-outline-warning p-2 px-4 m-2">
+                                    Leer más
+                                </button>
+                            </Link>
+                            <button
+                                className="btn btn-outline-danger"
+                                onClick={() => addToFavorites(vehicle)}
+                                disabled={isFavorite}   // se desactiva al añadir a fav
+                            >
+                                <i className="fas fa-heart mx-1"></i>
+                                {isFavorite ? "Guardado" : "Guardar en favoritos"}
+                            </button>
+                            
+                        </div>
                     </div>
                   </div>
                 </div>
