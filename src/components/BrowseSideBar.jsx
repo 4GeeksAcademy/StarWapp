@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export const BrowseSideBar = () => {
     return (
       <div className="col-2 bg-dark text-white p-4 min-vh-100">
-        <h2 className="h4 fw-bold mb-4">Browse</h2>
+        <h2 className="h4 fw-bold mb-4 text-warning">Browse</h2>
         <ul className="nav flex-column">
             <li className="nav-item">
                 <Link to="/characters" className="nav-link text-light active" aria-current="page">

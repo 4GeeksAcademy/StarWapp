@@ -13,11 +13,11 @@ export const Navbar = () => {
 	  }
 	
 	return (
-		<nav className="navbar mb-2 sticky-top bg-dark">
+		<nav className="navbar p-2 sticky-top bg-dark">
 			<div className="container-fluid">
-				<Link to="/">
-					<a className="navbar-brand mr-3 text-white">Blog Star Wars</a>
-				</Link>
+        <Link to="/" className="navbar-brand mr-3 text-warning">
+          Blog Star Wars
+        </Link>
 				<div className="ml-auto">
 				<div className="dropdown">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" 

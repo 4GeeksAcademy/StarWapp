@@ -9,7 +9,7 @@ export const Layout = () => {
     <ScrollToTop>
       <Navbar />
 
-      <div className="container-fluid">
+      <div className="container-fluid bg-black">
         <div className="row">
           <BrowseSideBar /> 
           
