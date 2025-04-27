@@ -13,7 +13,7 @@ export const Navbar = () => {
 	  }
 	
 	return (
-		<nav className="navbar mb-5 sticky-top bg-dark">
+		<nav className="navbar mb-2 sticky-top bg-dark">
 			<div className="container-fluid">
 				<Link to="/">
 					<a className="navbar-brand mr-3 text-white">Blog Star Wars</a>
